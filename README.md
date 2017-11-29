@@ -26,6 +26,6 @@
 ## Tech Used
 
 * MySQL
-* Node
+* Node.js
 
 ## Screen Shots

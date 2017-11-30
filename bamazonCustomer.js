@@ -1,10 +1,10 @@
-let mysql = require('mysql');
-let inquirer = require('inquirer');
-let table = require('console.table');
-let database = 'bamazon';
-let sql = 'Select * FROM bamazon';
+var mysql = require('mysql');
+var inquirer = require('inquirer');
+var table = require('console.table');
+var database = 'bamazon';
+var  sql = 'Select * FROM bamazon';
 
-let con = mysql.createConnection({
+var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "CodingCow2017",
@@ -60,18 +60,21 @@ function pickItem(inventory){
 }
 
 function checkInventory(itemID, quantity, inventory){
-	console.log(itemID);
+	//console.log(itemID);
 	//console.log	(inventory);
 	for ( var i = 0; i < inventory.length; i++){
 		
 		if(inventory[i].item_id === itemID ){
-			console.log(inventory[i].item_id);
+			//console.log(inventory[i].item_id);
 			var stockQuantity = inventory[i].stock_quantity
-			console.log(stockQuantity);
+			var productName = inventory[i].product_name
+			//console.log(stockQuantity);
 		if (stockQuantity >= quantity){
-			console.log("you can proceed to purchase");
+			console.log("You have purchased " + quantity + " " + productName);
+			updateInventory(itemID, quantity, inventory);
 		} else {
-			console.log("Insufficent Quantities")
+			console.log("Insufficent Quantities");
+			con.end();
 		}
 		}
 
@@ -79,5 +82,36 @@ function checkInventory(itemID, quantity, inventory){
 	}
 }
 
+function updateInventory(itemID, quantity, inventory){
+	con.query("SELECT * FROM products WHERE ?", {
+        item_id: itemID
+    }, function(error, response) {
+        if (error) throw error;
 
+        var newQuantity = response[0].stock_quantity - quantity;
 
+        if (newQuantity < 0)
+            newQuantity = 0;
+
+        con.query("UPDATE products SET ? WHERE ?", [{
+            stock_quantity: newQuantity
+        }, {
+            item_id: itemID
+        }], function(error, response) {});
+
+        cost(itemID, quantity);
+
+        console.log("The new inventory amount is " + "" + newQuantity);
+    });
+		}
+
+function cost(itemID, quantity) {
+    con.query("SELECT * FROM products WHERE ?", {
+        item_id: itemID
+    }, function(error, response) {
+        if (error) throw error;
+
+        var totalCost = response[0].price * quantity;
+        console.log("Total cost is $ " + totalCost);
+    });
+}

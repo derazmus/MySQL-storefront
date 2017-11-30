@@ -34,12 +34,12 @@ function listProducts(){
             console.table(rows);
             console.log("Total items: " + rows.length);
 
-            pickItem();
+            pickItem(rows);
         });
 }
 
-
-function pickItem(){
+/// identify the product the user wants and how many
+function pickItem(inventory){
     inquirer.prompt([
     {
         name: 'id',
@@ -50,10 +50,34 @@ function pickItem(){
         message: 'How many units would you like to buy?'
     },
     ]).then(function(answer){
-        queryItem(answer.id, answer.units);
+       // queryItem(answer.id, answer.units);
+       var itemID = parseInt(answer.id);
+       var quantity = answer.units;
+// query to search of item in database and see if amount avaliable
+       checkInventory(itemID, quantity, inventory);
 
     });
 }
 
-function 
+function checkInventory(itemID, quantity, inventory){
+	console.log(itemID);
+	//console.log	(inventory);
+	for ( var i = 0; i < inventory.length; i++){
+		
+		if(inventory[i].item_id === itemID ){
+			console.log(inventory[i].item_id);
+			var stockQuantity = inventory[i].stock_quantity
+			console.log(stockQuantity);
+		if (stockQuantity >= quantity){
+			console.log("you can proceed to purchase");
+		} else {
+			console.log("Insufficent Quantities")
+		}
+		}
+
+
+	}
+}
+
+
 

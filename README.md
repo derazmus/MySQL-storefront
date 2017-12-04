@@ -2,7 +2,7 @@
 
 ## Instructions
 
-## Challenge #1: Customer View (Minimum Requirement)
+## Customer View (Minimum Requirement)
 
 *	Create a MySQL Database called bamazon.
 *	Then create a Table inside of that database called products.
@@ -29,3 +29,4 @@
 * Node.js
 
 ## Screen Shots
+![](images/screenshot.

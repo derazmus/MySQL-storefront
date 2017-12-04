@@ -113,5 +113,6 @@ function cost(itemID, quantity) {
 
         var totalCost = response[0].price * quantity;
         console.log("Total cost is $ " + totalCost);
+        con.end();
     });
 }

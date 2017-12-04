@@ -2,7 +2,7 @@
 
 ## Instructions
 
-## Customer View (Minimum Requirement)
+## Customer View
 
 *	Create a MySQL Database called bamazon.
 *	Then create a Table inside of that database called products.

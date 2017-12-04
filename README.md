@@ -28,5 +28,4 @@
 * MySQL
 * Node.js
 
-## Screen Shots
-![](images/screenshot.
+
